@@ -29,7 +29,8 @@ stream.filter(follow: "#{ENV["TRACK_ACCOUNT_ID"]}") do |object|
         puts "Tamo block"
       end
       text = "Esse tweet de @#{object.user.screen_name} se parece bastante com outro de @#{kibe.user.screen_name} #{object.uri}" 
-      client.update(text)
+      tweet = client.update(text)
+      client.update("@KibeRobot #{kibe.uri}", :in_reply_to_status => tweet)
     end
   end
 end
