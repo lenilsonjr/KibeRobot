@@ -20,9 +20,10 @@ account_ids = ENV["TRACK_ACCOUNTS_IDS"].split(',')
 puts account_ids
 stream.filter(follow: "#{ENV["TRACK_ACCOUNTS_IDS"]}") do |object|
   puts "Received info"
-  puts object.user.id
-  puts object.is_a?(Twitter::Tweet)
-  puts account_ids.include?(object.user.id)
+  if object.is_a?(Twitter::Tweet)
+    puts object.user.id
+    puts account_ids.include?(object.user.id)
+  end
   puts "=================="
   if object.is_a?(Twitter::Tweet) && account_ids.include?(object.user.id) 
     puts "Analysing tweet: #{object.text}"
