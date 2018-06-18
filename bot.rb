@@ -22,13 +22,13 @@ stream.filter(follow: "#{ENV["TRACK_ACCOUNT_ID"]}") do |object|
     if !kibe.empty?
       puts "We found a copycat"
       kibe = kibe.last
-      text = "@#{object.user.screen_name} Opa, eu já vi esse tweet antes 🤔 @#{kibe.user.screen_name} #{kibe.uri}" 
+      text = "@#{object.user.screen_name} Opa, eu já vi esse tweet antes 🤔 @#{kibe.source_user.screen_name} #{kibe.uri}" 
       begin
         client.update(text, :in_reply_to_status => object)
       rescue Twitter::Error::Forbidden
         puts "Tamo block"
       end
-      text = "Esse tweet de @#{object.user.screen_name} se parece bastante com outro de @#{kibe.user.screen_name} #{object.uri}" 
+      text = "Esse tweet de @#{object.user.screen_name} se parece bastante com outro de @#{kibe.source_user.screen_name} #{object.uri}" 
       tweet = client.update(text)
       client.update("@KibeRobot #{kibe.uri}", :in_reply_to_status => tweet)
     end
