@@ -16,7 +16,7 @@ stream = Twitter::Streaming::Client.new do |config|
 end
 
 stream.filter(follow: "#{ENV["TRACK_ACCOUNT_ID"]}") do |object|
-  if object.user.screen_name == ENV["TRACK_ACCOUNT"] && object.is_a?(Twitter::Tweet)
+  if object.is_a?(Twitter::Tweet) && object.user.screen_name == ENV["TRACK_ACCOUNT"] 
     kibe = client.search("\"#{object.text}\"", result_type: "recent").take(100)
 
     if !kibe.empty?
